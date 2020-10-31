@@ -1,7 +1,10 @@
 package src.main.java.server;
 
+import src.main.java.server.topic.Administration;
+
 import java.io.*;
 import java.net.*;
+import java.util.Timer;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class Server {
@@ -11,6 +14,12 @@ public class Server {
     private final ConcurrentSkipListMap<String, Socket> clients = new ConcurrentSkipListMap<>();
 
     private ServerSocket serverSocket;
+    private Timer timer;
+
+    public Server() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new Administration(),0,5000);
+    }
 
     public void acceptConnection() throws IOException {
         Socket clientSocket = serverSocket.accept();
