@@ -1,11 +1,13 @@
+package src.main.java.client;
+
 import java.io.*;
 import java.net.Socket;
 
 public class Client {
     private Socket socket;
-    private String ip;
-    private String name;
-    private int port;
+    private final String ip;
+    private final String name;
+    private final int port;
     private PrintWriter out;
     private BufferedReader in;
 
@@ -36,7 +38,7 @@ public class Client {
             String receiver = stdIn.readLine();
             System.out.println("Message:");
             String message = stdIn.readLine();
-            out.println("1" + receiver + " " + message);
+            out.println("1" + receiver + ": " + message);
             System.out.println(receiver + " " + message);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -64,9 +66,8 @@ public class Client {
         try {
             String message;
             out.println("3");
-            while ((message = in.readLine()) != null) {
-                System.out.println(message);
-            }
+            while ((message = in.readLine()) == null) ;
+            System.out.println(message);
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.exit(-1);
@@ -101,7 +102,7 @@ public class Client {
     public static void main(String[] arg) {
 
         if (arg.length != 3) {
-            System.err.println("Usage: java Client <username> <host name> <port number> ");
+            System.err.println("Usage: java src.main.java.client.Client <username> <host name> <port number> ");
             System.exit(1);
         }
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
