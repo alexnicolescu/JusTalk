@@ -3,15 +3,16 @@ package src.main.java.server.topic;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 public class Topic {
-    private final ConcurrentHashMap<String, ConcurrentSkipListSet<TopicMessage>> messages;
+    private final ConcurrentSkipListMap<String, ConcurrentSkipListSet<TopicMessage>> messages;
     private static Topic singleton;
 
     private Topic() {
-        messages = new ConcurrentHashMap<>();
+        messages = new ConcurrentSkipListMap<>();
     }
 
     public void addMessage(TopicMessage message) {
