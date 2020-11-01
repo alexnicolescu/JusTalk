@@ -10,6 +10,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class Server {
 
     private static final int PORT_NUMBER = 8080;
+    private static final int MAX_TOPIC_TIME = 1;
 
     private final ConcurrentSkipListMap<String, Socket> clients = new ConcurrentSkipListMap<>();
 
@@ -18,7 +19,7 @@ public class Server {
 
     public Server() {
         timer = new Timer();
-        timer.scheduleAtFixedRate(new Administration(),0,5000);
+        timer.scheduleAtFixedRate(new Administration(MAX_TOPIC_TIME),0,5000);
     }
 
     public void acceptConnection() throws IOException {

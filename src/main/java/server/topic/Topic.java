@@ -1,5 +1,6 @@
 package src.main.java.server.topic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,14 +24,18 @@ public class Topic {
     }
 
     public List<String> getMessages(String type) {
-        return messages.get(type).stream().map(TopicMessage::getContent).collect(Collectors.toList());
+        if (messages.containsKey(type))        {
+            return messages.get(type).stream().map(TopicMessage::getContent).collect(Collectors.toList());
+        } else {
+            return new ArrayList<String>();
+        }
     }
 
-    public void removeOldMessages() {
+    public void removeOldMessages(double maxTopicTime) {
         for (Map.Entry<String, ConcurrentSkipListSet<TopicMessage>> entry : messages.entrySet()) {
             ConcurrentSkipListSet<TopicMessage> topics = entry.getValue();
             for (TopicMessage topic : topics) {
-                if (topic.isExpired()) {
+                if (topic.isExpired(maxTopicTime)) {
                     System.out.println("Topic of type " + topic.getType()+ " with message " + topic.getContent() + " expired.");
                     topics.remove(topic);
                 }

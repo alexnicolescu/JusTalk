@@ -26,8 +26,10 @@ public class TopicMessage implements Comparable {
     }
 
 
-    public boolean isExpired() {
-        return this.timePosted.plusSeconds((long) (60*this.duration)).compareTo(Instant.now())<0;
+    public boolean isExpired(double maxTopicTime) {
+        boolean expiredFromSelf =  this.timePosted.plusSeconds((long) (60*this.duration)).compareTo(Instant.now())<0;
+        boolean expiredFromServer = this.timePosted.plusSeconds((long) (60*maxTopicTime)).compareTo(Instant.now())<0;
+        return expiredFromSelf || expiredFromServer;
     }
 
 
