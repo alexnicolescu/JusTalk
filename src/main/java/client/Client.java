@@ -51,10 +51,10 @@ public class Client {
             System.out.println("Message type:");
             String type = stdIn.readLine();
             System.out.println("Time:");
-            int time = Integer.parseInt(stdIn.readLine());
+            double time = Double.parseDouble(stdIn.readLine());
             System.out.println("Message:");
             String message = stdIn.readLine();
-            out.println("2" + type + " " + time + " " + message);
+            out.println("2" + type + ":" + message + ":" + time);
             System.out.println(type + " " + time + " " + message);
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -90,9 +90,9 @@ public class Client {
             System.out.println("Message type:");
             type = stdIn.readLine();
             out.println("4" + type);
-            while ((message = in.readLine()) != null) {
-                System.out.println(message);
-            }
+            message = in.readLine();
+            System.out.println(message);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
             System.exit(-1);
