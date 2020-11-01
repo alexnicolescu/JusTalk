@@ -1,5 +1,7 @@
 package src.main.java.server;
 
+import src.main.java.server.queue.MessageQueue;
+
 import java.io.*;
 import java.net.*;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -24,6 +26,7 @@ public class Server {
 
     public void removeClient(String clientName) {
         clients.remove(clientName);
+        MessageQueue.removeUser(clientName);
     }
 
     public static void main(String[] args) {

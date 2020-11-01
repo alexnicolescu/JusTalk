@@ -24,6 +24,7 @@ public class ClientHandler extends Thread {
         this.in = in;
         this.username = username;
         this.server = server;
+        MessageQueue.addUser(username);
     }
 
     public void selectOption(String message) {
