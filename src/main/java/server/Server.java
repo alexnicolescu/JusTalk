@@ -2,6 +2,8 @@ package src.main.java.server;
 
 import src.main.java.server.topic.Administration;
 
+import src.main.java.server.queue.MessageQueue;
+
 import java.io.*;
 import java.net.*;
 import java.util.Timer;
@@ -34,6 +36,7 @@ public class Server {
 
     public void removeClient(String clientName) {
         clients.remove(clientName);
+        MessageQueue.removeUser(clientName);
     }
 
     public static void main(String[] args) {
