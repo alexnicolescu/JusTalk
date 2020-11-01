@@ -1,18 +1,28 @@
 package src.main.java.server;
 
+import src.main.java.server.topic.Administration;
+
 import src.main.java.server.queue.MessageQueue;
 
 import java.io.*;
 import java.net.*;
+import java.util.Timer;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class Server {
 
     private static final int PORT_NUMBER = 8080;
+    private static final int MAX_TOPIC_TIME = 1;
 
     private final ConcurrentSkipListMap<String, Socket> clients = new ConcurrentSkipListMap<>();
 
     private ServerSocket serverSocket;
+    private Timer timer;
+
+    public Server() {
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new Administration(MAX_TOPIC_TIME),0,5000);
+    }
 
     public void acceptConnection() throws IOException {
         Socket clientSocket = serverSocket.accept();

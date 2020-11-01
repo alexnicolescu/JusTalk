@@ -2,10 +2,13 @@ package src.main.java.server;
 
 import src.main.java.server.queue.MessageQueue;
 import src.main.java.server.representation.Message;
+import src.main.java.server.topic.Topic;
+import src.main.java.server.topic.TopicMessage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Timer;
 
 public class ClientHandler extends Thread {
 
@@ -18,6 +21,7 @@ public class ClientHandler extends Thread {
     private final Server server;
 
     private static final MessageQueue messageQueue = MessageQueue.newInstance();
+    private static final Topic topic = Topic.newInstance();
 
     public ClientHandler(PrintWriter out, BufferedReader in, String username, Server server) {
         this.out = out;
@@ -35,13 +39,13 @@ public class ClientHandler extends Thread {
                 sendMessage(message);
                 break;
             case "2":
-                System.out.println(username + " sent a topic");
+                topic.addMessage(new TopicMessage(message));
                 break;
             case "3":
                 retrieveMessage();
                 break;
             case "4":
-                System.out.println(username + " wants to read a topic");
+                out.println(topic.getMessages(message));
                 break;
             default:
                 System.out.println("invalid operation");
